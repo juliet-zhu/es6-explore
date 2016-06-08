@@ -1,0 +1,30 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>tagged template literal</title>
+</head>
+<body>
+	<script>
+		function template(strings,...keys){
+	return function(...values){
+		console.log('values ',values);
+		 var dict = values[values.length-1] || {};
+		 console.log('dict ',dict);
+		 var result = [strings[0]];
+		 console.log('result0 ',result);
+		 keys.forEach(function(key,i){
+		 	var value = Number.isInteger(key) ? values[key] : dict[key];
+		 	result.push(value,strings[i+1]);
+		 	console.log('result1 ',result);
+		 });
+		 return result.join('')
+	}
+}
+var t1Closure = template`${0}${1}${0}!`;
+t1Closure('Y', 'A');  // "YAY!" 
+var t2Closure = template`${0} ${'foo'}!`;
+t2Closure('Hello', {foo: 'World'});
+
+	</script>
+</body>
+</html>
